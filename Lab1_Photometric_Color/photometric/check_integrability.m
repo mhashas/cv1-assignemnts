@@ -19,7 +19,10 @@ SE = zeros(size(normals));
 
 % ========================================================================
 
-
+% ∂f/∂x = a(x, y)/c(x, y)
+p = normals(:,:,1)./normals(:,:,3);
+% ∂f/∂y = b(x, y)/c(x, y)
+q = normals(:,:,2)./normals(:,:,3);
 
 p(isnan(p)) = 0;
 q(isnan(q)) = 0;
@@ -34,8 +37,21 @@ q(isnan(q)) = 0;
 
 % ========================================================================
 
+% Approximate second derivative by neighbour difference
 
+[h, w, ~] = size(normals);
+dp_dy = zeros(size(p));
+dq_dx = zeros(size(q));
 
+for j = 1:w-1
+    dp_dy(:, j) = (q(:, j+1) - q(:, j));
+end
+
+for i = 1:h-1
+    dq_dx(i, :) = (q(i+1, :) - q(i, :));
+end
+
+SE = (dp_dy - dq_dx).^2;
 
 end
 

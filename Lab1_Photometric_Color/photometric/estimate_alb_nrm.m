@@ -9,7 +9,7 @@ function [ albedo, normal ] = estimate_alb_nrm( image_stack, scriptV, shadow_tri
 %   normal : the surface normal
 
 
-[h, w, ~] = size(image_stack);
+[h, w, d] = size(image_stack);
 if nargin == 2
     shadow_trick = true;
 end
@@ -28,9 +28,21 @@ normal = zeros(h, w, 3);
 %   solve scriptI * scriptV * g = scriptI * i to obtain g for this point
 %   albedo at this point is |g|
 %   normal at this point is g / |g|
-
-
-
+for i = 1:h
+    for j = 1:w
+        
+        i_vector = squeeze(image_stack(i,j,:));
+        if shadow_trick
+            i_matrix = diag(i_vector);
+            [g, ~] = linsolve(i_matrix*scriptV, i_matrix*i_vector);
+        else
+            [g, ~] = linsolve(scriptV,i_vector);
+        end
+        
+        albedo(i,j) = norm(g);
+        normal(i,j,:) = g/albedo(i,j);
+    end
+end
 % =========================================================================
 
 end
