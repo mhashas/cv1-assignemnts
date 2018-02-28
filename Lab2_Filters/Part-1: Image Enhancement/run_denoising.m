@@ -1,4 +1,9 @@
 clear all;
+saltpepper_psnr = myPSNR(imread('./images/image1_saltpepper.jpg'), imread('./images/image1.jpg'));
+gaussian_psnr = myPSNR(imread('./images/image1_gaussian.jpg'), imread('./images/image1.jpg'));
+strcat('psnr saltpepper = ', num2str(saltpepper_psnr))
+strcat('psnr gaussian = ', num2str(gaussian_psnr))
+
 images = ["./images/image1_gaussian.jpg", "./images/image1_saltpepper.jpg"];
 filters = ["box", "median", "gaussian"];
 params = { {{"size",[3,5,7]}}, {{"size",[3,5,7]}}, {{"sigma",[0.5,1,2]}, {"kernel_size",[3,5,7]}}};
