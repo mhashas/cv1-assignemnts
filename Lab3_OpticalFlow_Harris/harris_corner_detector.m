@@ -1,4 +1,4 @@
-function [Ix, Iy, H, rows, columns] = harris_corner_detector(image, g1_sigma, g1_size, g2_sigma, g2_size, k, window_size, threshold, top_N, method)
+function [Ix, Iy, H, rows, columns] = harris_corner_detector(image, g1_sigma, g1_size, g2_sigma, g2_size, k, window_size, top_N, method)
 %method = 'Eigen' | 'Harris' | 'Shi-Tomasi'
 image = rgb2gray(image);
 
@@ -43,7 +43,7 @@ switch method
         
 end
 
-H = nms(H, window_size, threshold, top_N);
+H = nms(H, window_size, top_N);
 
 [columns, rows] = find(H ~= 0);
 end
