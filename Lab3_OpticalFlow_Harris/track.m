@@ -12,6 +12,8 @@ supression_size = 15;
 top_N = 100;
 method = 'Harris';
 
+flow_scaling = 1.2;
+
 [Ix, Iy, H, rows, columns] = harris_corner_detector(image1, g1_sigma, g1_size, g2_sigma, g2_size, k, supression_size, top_N, method);
 
 figure
@@ -26,10 +28,10 @@ for i = 2:100
     imshow(image2)
     hold on
     quiver(floor(rows),floor(columns),Vx,Vy)
-    rows = rows + Vx;
-    columns = columns + Vy;
+    rows = rows + flow_scaling*Vx;
+    columns = columns + flow_scaling*Vy;
     plot(rows,columns,'ro', 'MarkerSize', 5)
-    %saveas(gcf,strcat('person_toy_flow/', pad(num2str(i), 8, 'left','0'),'.jpg'))
+    saveas(gcf,strcat('person_toy_flow/', pad(num2str(i), 8, 'left','0'),'.jpg'))
     pause(0.01)
     image1 = image2;
     
