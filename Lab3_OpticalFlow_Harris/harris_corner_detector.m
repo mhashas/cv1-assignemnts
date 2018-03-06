@@ -9,8 +9,8 @@ derivative = [ -1/2; 0; 1/2];
 Gx = imfilter(G, derivative, 0, 'same', 'conv');
 Gy = imfilter(G, derivative', 0, 'same', 'conv');
 
-Ix = imfilter(image, Gx);
-Iy = imfilter(image, Gy);
+Ix = imfilter(image, Gx, 0, 'same', 'conv');
+Iy = imfilter(image, Gy, 0, 'same', 'conv');
 
 G = fspecial('gaussian', g2_size, g2_sigma);
 A = imfilter(Ix.*Ix, G, 0, 'same', 'conv');
