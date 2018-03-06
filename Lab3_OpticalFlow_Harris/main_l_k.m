@@ -7,9 +7,6 @@ for idx = 1:2
     path2 = pairs(idx,2);
     path2 = path2{1};
     [N, M, ~] = size(imread(path1));
-    [Vx, Vy] = lucas_kanade(imread(path1),imread(path2));
-    Xs = linspace(1,N,floor(N/15));
-    Ys = linspace(1,M,floor(M/15));
-    [Xs, Ys] = meshgrid(Xs, Ys);
-    figure;imshow(imread(path2));hold on; quiver(Xs(:),Ys(:),Vx(:),Vy(:)); pause(0.5)
+    [Vx, Vy, Xs, Ys] = lucas_kanade(imread(path1),imread(path2));
+    figure;imshow(imread(path2));hold on; quiver(Xs,Ys,Vx,Vy); pause(0.5)
 end
