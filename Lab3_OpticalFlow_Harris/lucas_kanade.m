@@ -1,4 +1,4 @@
-function [Vx, Vy, Xs, Ys] = lucas_kanade(image1, image2)
+function [Vx, Vy, Xs, Ys] = lucas_kanade(image1, image2, Xs, Ys, window_size)
 if length(size(image1)) == 3
     image1 = rgb2gray(image1);
     image2 = rgb2gray(image2);
@@ -21,16 +21,32 @@ It = image2 - image1;
 Vx = zeros(floor(N/15), floor(M/15));
 Vy = zeros(floor(N/15), floor(M/15));
 
-Xs = zeros(floor(N/15),floor(M/15));
-Ys = zeros(floor(N/15),floor(M/15));
+if nargin == 2
+    %set to predefined 15 window size and equally separated
+    window_size = 15;
+    Xs = zeros(floor(N/15),floor(M/15));
+    Ys = zeros(floor(N/15),floor(M/15));
 
-for i = 1:floor(N/15)
-    for j = 1:floor(M/15)
+    for i = 1:floor(N/15)
+        for j = 1:floor(M/15)
+            start_i = (i-1)*15+1;
+            end_i = i*15;
+            start_j = (j-1)*15+1;
+            end_j = j*15;
+            Ys(i,j) = start_i + (end_i - start_i) / 2;
+            Xs(i,j) = start_j + (end_j - start_j) / 2;
+        end
+    end
+end
+mask_radius = floor(window_size/2);
+for i = 1:length(Xs)
+    for j = 1:length(Ys)
         % for each window (i-1)*15+1:i*15, (j-1)*15+1:j*15 
-        start_i = (i-1)*15+1;
-        end_i = i*15;
-        start_j = (j-1)*15+1;
-        end_j = j*15;
+        
+        start_i = Ys(i,j)-mask_radius;
+        end_i = Ys(i,j)+mask_radius;
+        start_j = Xs(i,j)-mask_radius;
+        end_j = Xs(i,j)+mask_radius;
         
         Ix_mask = Ix(start_i:end_i, start_j:end_j);
         Iy_mask = Iy(start_i:end_i, start_j:end_j);
@@ -43,8 +59,6 @@ for i = 1:floor(N/15)
         
         Vx(i,j) = v(2);
         Vy(i,j) = v(1);
-        Ys(i,j) = start_i + (end_i - start_i) / 2;
-        Xs(i,j) = start_j + (end_j - start_j) / 2;
     end
 end
 end
