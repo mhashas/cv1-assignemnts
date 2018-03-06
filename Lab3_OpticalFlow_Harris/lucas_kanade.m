@@ -18,9 +18,6 @@ Ix = imfilter(image2, Gx, 0, 'same', 'conv');
 Iy = imfilter(image2, Gy, 0, 'same', 'conv');
 It = image2 - image1;
 
-Vx = zeros(floor(N/15), floor(M/15));
-Vy = zeros(floor(N/15), floor(M/15));
-
 if nargin == 2
     %set to predefined 15 window size and equally separated
     window_size = 15;
@@ -37,29 +34,41 @@ if nargin == 2
             Xs(i,j) = start_j + (end_j - start_j) / 2;
         end
     end
+    
+    Ys = Ys(:);
+    Xs = Xs(:);
 end
+
 mask_radius = floor(window_size/2);
-for i = 1:length(Xs)
-    for j = 1:length(Ys)
-        % for each window (i-1)*15+1:i*15, (j-1)*15+1:j*15 
-        
-        start_i = Ys(i,j)-mask_radius;
-        end_i = Ys(i,j)+mask_radius;
-        start_j = Xs(i,j)-mask_radius;
-        end_j = Xs(i,j)+mask_radius;
-        
-        Ix_mask = Ix(start_i:end_i, start_j:end_j);
-        Iy_mask = Iy(start_i:end_i, start_j:end_j);
-        It_mask = It(start_i:end_i, start_j:end_j);
-        
-        A = [Ix_mask(:) Iy_mask(:)];
-        b = -It_mask(:);
-        v = pinv(A'*A);
-        v = v*A'*b;
-        
-        Vx(i,j) = v(2);
-        Vy(i,j) = v(1);
+Vx = zeros(size(Xs));
+Vy = zeros(size(Ys));
+
+[N, M] = size(image1);
+for i = 1:length(Ys)
+    % for each window (i-1)*15+1:i*15, (j-1)*15+1:j*15 
+
+    start_i = Ys(i)-mask_radius;
+    end_i = Ys(i)+mask_radius;
+    start_j = Xs(i)-mask_radius;
+    end_j = Xs(i)+mask_radius;
+    
+    if start_i < 1 || start_j < 1 || end_i > N || end_j > M
+       Vx(i) = 0;
+       Vy(i) = 0;
+       continue
     end
+
+    Ix_mask = Ix(start_i:end_i, start_j:end_j);
+    Iy_mask = Iy(start_i:end_i, start_j:end_j);
+    It_mask = It(start_i:end_i, start_j:end_j);
+
+    A = [Ix_mask(:) Iy_mask(:)];
+    b = -It_mask(:);
+    v = pinv(A'*A);
+    v = v*A'*b;
+
+    Vx(i) = v(2);
+    Vy(i) = v(1);
 end
 end
 
