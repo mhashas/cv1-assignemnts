@@ -25,6 +25,12 @@ imshow(image1)
 hold on
 plot(rows,columns,'ro', 'MarkerSize', 5)
 
+if save_frames == 1
+    if isdir(strcat(image_set_name, '_flow/')) == 0
+        mkdir(strcat(image_set_name, '_flow/'));
+    end
+end
+
 for i = 2:image_range
     image2 = imread(strcat(image_set_name, '/', pad(num2str(i), name_0_padding, 'left','0'), '.', image_ext));    
     [Vx, Vy] = lucas_kanade(image1,image2, floor(rows), floor(columns), supression_size);

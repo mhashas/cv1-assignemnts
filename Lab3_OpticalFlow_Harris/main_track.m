@@ -3,7 +3,7 @@ close all
 
 sets = [["pingpong" "jpeg" "4" "52"]; ["person_toy" "jpg" "8" "104"]];
 [nr_sets, ~] = size(sets);
-save_frames = 0; % 1 for saving; 0 just for showing
+save_frames = 1; % 1 for saving; 0 just for showing
 save_frames_ext = 'jpg';
 
 for idx = 1:nr_sets
