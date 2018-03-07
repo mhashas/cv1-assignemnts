@@ -1,27 +1,13 @@
-function create_video(example)
+function create_video(image_set_name, image_ext, name_0_padding, image_range)
 %example should be pingpong or person_toy
 
-if strcmp(example, 'person_toy')
-    padding = 8;
-    extension = '.jpg';
-    read_folder = 'person_toy_tracking/';
-    start_loop = 2;
-    end_loop = 104;
-    outputVideo = VideoWriter(fullfile('','person_toy.avi'));
-else
-    padding = 4;
-    extension = '.jpeg';
-    read_folder = 'pingpong_tracking/';
-    start_loop = 1;
-    end_loop = 52;
-    outputVideo = VideoWriter(fullfile('','pingpong.avi'));
-end
+outputVideo = VideoWriter(fullfile('',strcat(image_set_name, '.avi')));
 
 outputVideo.FrameRate = 10;  % Default 30
 open(outputVideo)
 
-for i = start_loop:end_loop
-    image = imread(strcat(read_folder, pad(num2str(i), padding, 'left','0'), extension));    
+for i = 2:image_range
+    image = imread(strcat(image_set_name, '_tracking/', pad(num2str(i), name_0_padding, 'left','0'), '.', image_ext));    
     writeVideo(outputVideo,image)
 end
 

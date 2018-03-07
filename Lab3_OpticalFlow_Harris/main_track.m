@@ -16,6 +16,9 @@ for idx = 1:nr_sets
     cell4 = sets(idx,4);
     image_range = str2num(cell4{1});
     
+    fprintf('%s %s\n','tracking', image_set_name)
     tracking(image_set_name, image_ext, name_0_padding, image_range, save_frames)
-    create_video(image_set_name)
+    fprintf('%s %s\n','creating video', image_set_name)
+    create_video(image_set_name, 'jpg', name_0_padding, image_range)
+    fprintf('%s %s\n','done', image_set_name)
 end
