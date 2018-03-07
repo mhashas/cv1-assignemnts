@@ -31,4 +31,3 @@ for image_name = ["person_toy/00000001.jpg" "pingpong/0000.jpeg"]
         end
     end
 end
-%TODO search g1_sigma; g2_sigma;

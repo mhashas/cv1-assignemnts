@@ -42,7 +42,7 @@ for i = 1:length(Ys)
 
     A = [Ix_mask(:) Iy_mask(:)];
     b = -It_mask(:);
-    v = pinv(A'*A);
+    v = (A'*A)^(-1);
     v = v*A'*b;
 
     Vx(i) = v(2);
