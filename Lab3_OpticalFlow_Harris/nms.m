@@ -1,4 +1,5 @@
 function [H] = nms(H, w_size, top_N)
+% Non maximal suppresion of the ( at most top_N ) values
 
 sorted_uniq_values = unique(H(:));
 hist = histc(H(:), sorted_uniq_values);
