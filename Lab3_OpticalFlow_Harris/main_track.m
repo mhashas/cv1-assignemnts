@@ -17,4 +17,5 @@ for idx = 1:nr_sets
     image_range = str2num(cell4{1});
     
     tracking(image_set_name, image_ext, name_0_padding, image_range, save_frames)
+    create_video(image_set_name)
 end

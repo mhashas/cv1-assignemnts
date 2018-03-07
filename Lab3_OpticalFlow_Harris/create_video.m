@@ -1,19 +1,17 @@
-clear all
-close all
-
-example = 'pingpong'; %change to pingpong for other example
+function create_video(example)
+%example should be pingpong or person_toy
 
 if strcmp(example, 'person_toy')
     padding = 8;
     extension = '.jpg';
-    read_folder = 'person_toy_flow/';
+    read_folder = 'person_toy_tracking/';
     start_loop = 2;
     end_loop = 104;
     outputVideo = VideoWriter(fullfile('','person_toy.avi'));
 else
     padding = 4;
     extension = '.jpeg';
-    read_folder = 'pingpong_flow/';
+    read_folder = 'pingpong_tracking/';
     start_loop = 1;
     end_loop = 52;
     outputVideo = VideoWriter(fullfile('','pingpong.avi'));
@@ -28,6 +26,4 @@ for i = start_loop:end_loop
 end
 
 close(outputVideo)
-
-
-    
+end
