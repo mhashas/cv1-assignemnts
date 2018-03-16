@@ -8,7 +8,7 @@ imshow(cat(2, img1, img2)) ;
 
 plot_lines(f1, f2, matches, img1);
 
-[trans_matrix] = ransac(img1, img2, matches, f1, f2, 3000, 150, 10);
+[trans_matrix] = ransac(matches, f1, f2, 3000, 150, 10);
 trans_m = [trans_matrix(1), trans_matrix(2); trans_matrix(3), trans_matrix(4)];
 trans_t = [trans_matrix(5); trans_matrix(6)];
 
