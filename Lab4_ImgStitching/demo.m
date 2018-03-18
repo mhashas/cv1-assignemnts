@@ -3,10 +3,7 @@ img2 = im2double(imread('boat2.pgm'));
 
 [f1, f2, scores, matches, d1, d2] = keypoint_matching(img1, img2);
 
-figure(2) ; clf ;
-imshow(cat(2, img1, img2)) ;
-
-plot_lines(f1, f2, matches, img1);
+plot_lines(f1, f2, matches, img1, img2);
 
 [trans_matrix] = ransac(matches, f1, f2, 3000, 150, 10);
 trans_m = [trans_matrix(1), trans_matrix(2); trans_matrix(3), trans_matrix(4)];
@@ -18,13 +15,16 @@ tform_21 = maketform('affine', [trans_m; trans_t']);
 transformed_im1 = imtransform(img1, tform_12);
 transformed_im2 = imtransform(img2, tform_21);
 figure;
-% imshow(img1)
-imshow(img2)
+imshow(img1)
+%imshow(img2)
 figure;
-imshow(transformed_im1)
-% imshow(transformed_im2)
+%imshow(transformed_im1)
+imshow(transformed_im2)
 
-function plot_lines(f1, f2, matches, img1)
+function plot_lines(f1, f2, matches, img1, img2)
+figure(2) ; clf ;
+imshow(cat(2, img1, img2));
+
 subset = datasample(matches, 50, 2);
 
 x1 = f1(1,subset(1,:)) ;

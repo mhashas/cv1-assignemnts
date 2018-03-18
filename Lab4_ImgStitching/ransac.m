@@ -1,7 +1,7 @@
 function [best_transformation_matrix] = ransac(matches, f1, f2, N, P, radius)
 
 best_transformation_matrix = [];
-max_inliers = -inf;
+best_number_inliers = 0;
 
 for i = 1:N
     subset = datasample(matches, P, 2);
@@ -41,8 +41,8 @@ for i = 1:N
             number_inliers = number_inliers + 1;
         end
         
-        if max_inliers < number_inliers
-            max_inliers = number_inliers;
+        if best_number_inliers < number_inliers
+            best_number_inliers = number_inliers;
             best_transformation_matrix = x;
         end
     end
