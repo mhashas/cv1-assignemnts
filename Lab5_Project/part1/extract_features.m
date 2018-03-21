@@ -1,5 +1,7 @@
-function [features] = extract_features(dataset, colorspace, dense)
-features = [];
+function [keypoints, descriptors] = extract_features(dataset, colorspace, dense)
+
+descriptors = [];
+keypoints = [];
 
 for i=1:size(dataset)
     image = dataset{i};
@@ -13,33 +15,77 @@ for i=1:size(dataset)
             image = single(image);
             
             if dense
-                [~, d] = vl_dsift(image);
-            else 
-                [~, d] = vl_sift(image);
+                [k, d] = vl_dsift(image, 'step', 10);
+            else
+                [k, d] = vl_sift(image);
             end
             
-            features = [features, double(d)];
-            
+            keypoints = [keypoints, k];
+            descriptors = [descriptors, double(d];
+                
         case 'RGB'
+        if size(image, 3) == 3
+            image = single(image);
+            k = [];
+            d = [];
+            if dense
+                [k, d] = vl_phow(image, 'Color', 'rgb', 'step', 10);
+                d = double(d);
+            else
+                for c=1:size(image, 3)
+                    [c_k, c_d] = vl_sift(image(:,:,c));
+                    d = [d, double(c_d)];
+                    k = [k, c_k];
+                end
+            end
+            
+            keypoints = [keypoints, k];
+            descriptors = [descriptors, d];
+        else
+            warning('RGB called for grayscale');
+        end
+        
+        case 'rgb'
             if size(image, 3) == 3
-                image = single(image);
+                k = [];
+                d = [];
+                image = single(rgb2norm(image));
+                
                 if dense
-                    [~, d] = vl_phow(image, 'Color', 'rgb');
+                    [k, d] = vl_phow(image, 'Color', 'rgb', 'step', 10);
                     d = double(d);
-                else 
+                else
                     for c=1:size(image, 3)
-                        [~, c_d] = vl_sift(image(:,:,c));
+                        [c_k, c_d] = vl_sift(image(:,:,c));
                         d = [d, double(c_d)];
+                        k = [k, c_k];
                     end
                 end
-            
-                features = [features, d];
+                
+                keypoints = [keypoints, k];
+                descriptors = [descriptors, d];
+            else
+                warning('rgb called for grayscale');
             end
             
-           
-               
-                    
-            
+        case 'opponent'
+            k = [];
+            d = [];
+            image = single(rgb2opponent(image));
+            if size(image,3) == 3
+                if dense
+                    [k, d] = vl_phow(image, 'color' , 'opponent', 'step', '10');
+                else
+                    for c=1:size(image,3)
+                        [c_k, c_d] = vl_sift(image(:,:,c));
+                        d = [d, double(c_d)];
+                        k = [k_, c_k];
+                    end
+                end
+                
+                keypoints = [keypoints, k];
+                descriptors = [descriptors, d];
+            end
     end
 end
 end

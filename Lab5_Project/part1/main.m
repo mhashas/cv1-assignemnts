@@ -2,11 +2,11 @@ clear
 clc
 close all
 
-cars_train = './Caltech4/ImageData/cars_train/';
-airplane_train = './Caltech4/ImageData/airplanes_train/';
-faces_train = './Caltech4/ImageData/faces_train/';
-motorbikes_train = './Caltech4/ImageData/motorbikes_train/';
+%user defined variables
+number_of_images = 50;
+dense = true; % true if we should extract SIFT descriptors densely
+colorspace = 'rgb' % possible values are: gray, rgb, RGB, opponent 
 
+dataset = load_dataset(number_of_images);
 
-images = get_images(cars_train, 50);
-disp(length(images));
+for i
