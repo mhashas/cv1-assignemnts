@@ -6,7 +6,7 @@ function [returned_images] = get_images(dataset_directory, number_of_images)
         number_of_images = length(images);
     end
     
-    for i=1:2
+    for i=1:number_of_images
         file = strcat(dataset_directory, images(i).name);
         image = imread(file);
         
