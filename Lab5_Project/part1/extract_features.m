@@ -7,8 +7,7 @@ for i=1:size(dataset, 2)
     
     image = im2single(dataset{i});
     
-    [d, k] = get_image_features(image, colorspace, dense);
-    
+    [k, d] = get_image_features(image, colorspace, dense);
     %sample 200 random descriptors for each image
     if sample_random_image_features
         if sample_size < size(d,2)

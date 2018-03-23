@@ -4,7 +4,7 @@ close all
 
 %% LOAD DATA
 %user defined variables
-images_per_class = 2;
+images_per_class = 3;
 dense = 1; % true if we should extract SIFT descriptors densely
 colorspace = 'opponent'; % possible values are: gray, rgb, RGB, opponent 
 
@@ -23,31 +23,33 @@ for class = 1:4
 end
 
 %% CLUSTER FEATURES
-vocab_size = 1000; 
+vocab_size = 1000;
 [centers, assignments] = vl_kmeans(descriptors, vocab_size, 'Initialization', 'plusplus', 'Algorithm' ,'Lloyd');
-size(centers)
-size(assignments)
 
 %% GET HISTOGRAMS OF IMAGES
-data = zeros(size(centers,2),number_of_images*4);
-
+data = zeros(size(centers,2), images_per_class*4);
 for class = 1:4
-    for image_idx = 1:number_of_images
+    for image_idx = 1:images_per_class
         image = complete_dataset{class}{image_idx};
         histogram = image_feature_histogram(centers, image, colorspace, dense);
         
-        data_idx = (class-1)*number_of_images + image_idx;
+        data_idx = (class-1)*images_per_class + image_idx;
         data(:, data_idx) = histogram;
-        labels(data_idx) = class;
     end
 end
 
 %% TRAIN 4 SVMs 
 classifiers = {};
+lambda = 0.01;
 for i = 1:4
-    labels = zeros(1, number_of_images*4);
-    labels((i-1)*number_of_images: (i)*number_of_images - 1) = ones(number_of_images);
-    [w b info] = vl_svmtrain(data, labels);
+    labels = zeros(1, images_per_class*4);
+    labels((i-1)*images_per_class+1: (i)*images_per_class) = ones(1, images_per_class);
+    [w b info] = vl_svmtrain(data, labels, lambda);
     classifiers{i}{1} = w;
     classifiers{i}{2} = b;
 end
+
+% classifier: {classifier1}, {classifier2}, etc.
+% classifier{1}: {w} {b}
+% w: num centers X 1
+% b: 1 X 1
