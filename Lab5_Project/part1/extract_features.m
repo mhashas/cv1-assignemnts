@@ -4,6 +4,7 @@ descriptors = [];
 keypoints = [];
 
 for i=1:size(dataset, 2)
+    
     image = im2single(dataset{i});
     
     switch colorspace
@@ -88,7 +89,5 @@ for i=1:size(dataset, 2)
             end
     end
 end
-
-descriptors = descriptors';
 
 end
