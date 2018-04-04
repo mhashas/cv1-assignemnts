@@ -4,10 +4,10 @@ function histogram = build_histogram(centers, image, colorspace, dense)
 
 histogram = zeros(size(centers,2),1);
 %% get all the sift features
-[~, d] = get_image_features(image, colorspace, dense, size(centers,1));
+[~, d] = get_image_features(image, colorspace, dense);
 
 %% assign each feature to a cluster and count
-for feature_idx = 1,size(d,2);
+for feature_idx = 1:size(d,2)
     feature = d(:, feature_idx);
     [~, k] = min(vl_alldist(feature, centers));
     histogram(k) = histogram(k) + 1;
