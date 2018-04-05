@@ -12,6 +12,7 @@ function [vocabulary_images, dataset_images] = get_images(dataset_directory, nr_
     for i=1:total_images
         file = strcat(dataset_directory, images(i).name);
         image = imread(file); 
+        dataset_images{i} = image;
     end
     
     for i=1:nr_vocab_images
