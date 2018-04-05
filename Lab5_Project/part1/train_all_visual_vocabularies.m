@@ -1,4 +1,4 @@
-sift_types = [0, 1];
+sift_types = [1];
 color_spaces = [ "RGB", "rgb",  "opponent", "gray"];
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
 vocabulary_images = 250;
@@ -12,7 +12,7 @@ for dense = sift_types
     end
     
     for color = color_spaces
-        [train_vocab_set, train_set, ~] = load_dataset(1, 1);
+        [train_vocab_set, ~, ~] = load_dataset(vocabulary_images, 0);
         
         tic;
         descriptors = extract_sift_features(train_vocab_set, color, dense, max_features);
@@ -25,7 +25,6 @@ for dense = sift_types
                 toc;
                 
                 save(sprintf('saved_vocabs/%d_images_%d_vocabsize_%s_%s.mat', vocabulary_images, k, dense_string, color), 'centers');
-                save(sprintf('train_set/%d_images_%d_vocabsize_%s_%s.mat', vocabulary_images, k, dense_string, color), 'train_set');
             catch e
                 warning('ERROR! Failed to build vocab %d_images_%d_vocabsize_%s_%s.mat\n%s', vocabulary_images, k, dense_string, color, e.message);
             end
