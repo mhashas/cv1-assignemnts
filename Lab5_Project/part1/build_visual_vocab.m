@@ -1,8 +1,4 @@
-function [idx, C] = build_visual_vocab(descriptors, k, dense)
-    if dense
-        [C, idx] = vl_kmeans(descriptors, k);
-    else
-        [idx, C] = kmeans(descriptors', k, 'Start', 'cluster');
-    end
+function [idx, C] = build_visual_vocab(descriptors, k)
+    [C, idx] = vl_kmeans(descriptors, k);
     C = normr(C);
 end

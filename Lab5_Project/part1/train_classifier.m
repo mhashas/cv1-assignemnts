@@ -3,11 +3,7 @@ function [classifiers, test_set, test_features] =  train_classifier(vocabulary_i
 [train_vocab_set, train_set, test_set] = load_dataset(vocabulary_images, train_images_per_class);
 
 %% COLLECT SIFT FEATURES
-descriptors = [];
-for class = 1:4
-    class_descriptors = extract_features(train_vocab_set{class}, colorspace, dense, max_features);
-    descriptors = [descriptors, class_descriptors];
-end
+descriptors = extract_sift_features(train_vocab_set, colorspace, dense, max_features);
 
 %% BUILD VISUAL VOCAB
 [~, centers] = build_visual_vocab(descriptors, vocabulary_size, dense);

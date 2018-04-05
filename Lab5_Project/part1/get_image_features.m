@@ -1,5 +1,12 @@
 function [k, d] = get_image_features(image, colorspace, dense, max_features)
 
+if ~strcmp(colorspace, "gray") && size(image,3) < 3 
+    workaround(:,:,1) = image;
+    workaround(:,:,2) = image;
+    workaround(:,:,3) = image;
+    image = workaround;
+end
+
 if nargin < 4
     max_features = -1;
 end
