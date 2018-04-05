@@ -15,14 +15,14 @@ function [vocabulary_images, dataset_images] = get_images(dataset_directory, nr_
         dataset_images{i} = image;
     end
     
+    for i=1:nr_vocab_images
+        vocabulary_images{i} = dataset_images{i};
+    end
+    
     % randomize images
     dataset_images = dataset_images';
     dataset_images = dataset_images(randperm(total_images));
     dataset_images = dataset_images';
-    
-    for i=1:nr_vocab_images
-        vocabulary_images{i} = dataset_images{i};
-    end
     
     for i=1:nr_dataset_images
         dataset_images{i} = dataset_images{i + nr_vocab_images};
