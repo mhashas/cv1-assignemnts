@@ -12,14 +12,18 @@ for dense = sift_types
     end
     
     for color = color_spaces
+        disp(sprintf('Loading dataset for %s' , color));
+        
         [train_vocab_set, ~, ~] = load_dataset(vocabulary_images, 0);
         
+        disp(sprintf('Extracting features'));
+
         tic;
         descriptors = extract_sift_features(train_vocab_set, color, dense, max_features);
         toc;
         for k = vocabulary_sizes
             try
-                disp('Building vocab');
+                disp(sprintf('Building vocab %d', k));
                 tic;
                 [~, centers] = build_visual_vocab(descriptors, k);
                 toc;
