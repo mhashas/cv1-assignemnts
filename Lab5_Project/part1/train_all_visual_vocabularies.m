@@ -1,8 +1,9 @@
-sift_types = [1];
+sift_types = [0];
 color_spaces = [ "RGB", "rgb",  "opponent", "gray"];
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
-vocabulary_images = 250;
-max_features = 200 * vocabulary_images * 4;
+vocabulary_images = 200;
+max_features = 50 * vocabulary_images * 4;
+max_iter = 500;
 
 for dense = sift_types
     if dense
@@ -25,7 +26,7 @@ for dense = sift_types
             try
                 disp(sprintf('Building vocab %d', k));
                 tic;
-                [~, centers] = build_visual_vocab(descriptors, k);
+                [~, centers] = build_visual_vocab(descriptors, k, max_iter);
                 toc;
                 
                 save(sprintf('saved_vocabs/%d_images_%d_vocabsize_%s_%s.mat', vocabulary_images, k, dense_string, color), 'centers');
