@@ -14,3 +14,5 @@ for class = 1:4
     end
     features = [features, descriptors];
 end
+
+features = double(features);

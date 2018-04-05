@@ -15,7 +15,7 @@ for dense = sift_types
         [train_vocab_set, ~, ~] = load_dataset(vocabulary_images, 0);
         
         tic;
-        descriptors = extract_sift_features(train_vocab_set, colorspace, dense, max_features);
+        descriptors = extract_sift_features(train_vocab_set, color, dense, max_features);
         toc;
         for k = vocabulary_sizes
             try
