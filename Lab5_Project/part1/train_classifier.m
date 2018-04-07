@@ -34,7 +34,7 @@ for i = 1:4
     shifted_features = shift_features(train_features, train_images_per_class, i, 4);
     
     best = train(labels', sparse(shifted_features), '-C -s 0');
-    classifiers{i} = train(labels', sparse(train_features), sprintf('-c %f -s 0', best(1) + 0.00001));   
+    classifiers{i} = train(labels', sparse(shifted_features), sprintf('-c %f -s 0', best(1) + 0.00001));   
 end
 
 end
