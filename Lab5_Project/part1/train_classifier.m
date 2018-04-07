@@ -10,7 +10,7 @@ descriptors = extract_sift_features(train_vocab_set, colorspace, dense, max_feat
 
 %% BUILD FEATURES
 train_features = build_features(train_set, centers, colorspace, dense, train_images_per_class);
-%test_features = build_features(test_set, centers, colorspace, dense, test_images_per_class);
+test_features = build_features(test_set, centers, colorspace, dense, test_images_per_class);
 
 %% TRAIN SVMs 
 classifiers = {};
@@ -25,20 +25,3 @@ for i = 1:4
 end
 
 end
-
-%{ 
-
-START TRAINING ASAP ON HOME COMPUTER
-DO ONE MODEL ON HOME COMPUTER WHILE WRITTING CODE FOR TRAINING ALL
-CLASSIFIERS
-
-TRAIN ALL LINEAR CLASSIFIERS DURING DAY AND WRITE REPORT 
-
-TRAIN ALL RBF CLASSIFIERS DURING NIGHT AND WRITE REPORT
-
-
-GOD BLESS
-
-
-
-%}
