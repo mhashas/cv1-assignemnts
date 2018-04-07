@@ -30,7 +30,7 @@
                 for train_images_per_class = train_images_sizes
                     [classifiers, ~, ~] = train_classifier(vocabulary_images, train_images_per_class, 0, dense, color, k, max_features, 0, centers);
                     classifier_name = sprintf('trained_classifiers/%d_images_%d_vocabsize_%d_training_images%s_%s.mat', vocabulary_images, k, train_images_per_class, dense_string, color);
-                    save(classifier_name, classifiers); 
+                    save(classifier_name, 'classifiers'); 
                 end
              end
          end
