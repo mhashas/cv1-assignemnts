@@ -3,8 +3,8 @@ clc
 close all
 
 %% USER DEFINED FEATURES
-vocabulary_images = 2; % number of images used for building the visual vocabulary
-training_images_per_class = 2; % number of images for training the svm classifier
+vocabulary_images = 50; % number of images used for building the visual vocabulary
+training_images_per_class = 50; % number of images for training the svm classifier
 test_images_per_class = 2;
 dense = true; % true if we should extract SIFT descriptors densely
 colorspace = 'opponent'; % possible values are: gray, rgb, RGB, opponent 

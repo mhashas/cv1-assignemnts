@@ -1,9 +1,12 @@
-sift_types = [0];
-color_spaces = [ "RGB", "rgb",  "opponent", "gray"];
-vocabulary_sizes = [400, 800, 1600, 2000, 4000];
-vocabulary_images = 200;
-max_features = 50 * vocabulary_images * 4;
-max_iter = 500;
+sift_types = [1]; % 0 or 1 for dense or normal sift
+color_spaces = ["rgb"];
+% if set to 1, we extract keypoints from gray image and the descriptors of those keypoint from image transformed into colorspace. 
+% else we extract descriptors directly from image transformed into colorspace
+extract_from_gray = 1;
+vocabulary_sizes = [400, 800, 1600, 2000, 4000]; % k in kmeans
+vocabulary_images = 200; % number of images used for training the vocabulary
+max_features = 50 * vocabulary_images * 4; % max number of features 
+max_iter = 500; % max number of iterations for kmeans
 
 for dense = sift_types
     if dense
@@ -20,7 +23,7 @@ for dense = sift_types
         disp(sprintf('Extracting features'));
 
         tic;
-        descriptors = extract_sift_features(train_vocab_set, color, dense, max_features);
+        descriptors = extract_sift_features(train_vocab_set, color, dense, max_features, extract_from_gray);
         toc;
         for k = vocabulary_sizes
             try
