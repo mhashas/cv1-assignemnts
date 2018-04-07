@@ -1,14 +1,14 @@
-function [mAP] = evaluation(classifiers, test_set, test_features)
+function [mAP] = evaluation(classifiers, test_set, test_features, test_images_per_class)
+
 mAP = ones(1, 4);
     for class=1:4
         disp(sprintf('Evaluation for class %d', class));
         
-        labels = zeros(1, 50*4);
-        labels((i-1)*50+1: (i)*50) = ones(1, 50);
+        labels = zeros(1, test_images_per_class*4);
+        labels((class-1)*test_images_per_class+1:(class)*test_images_per_class) = ones(1, test_images_per_class);
         
-        [predicted_labels, ~, class_scores] = predict(labels, sparse(test_features), classifiers{class});
-        scores(class, :) = sort(class_scores);
-        mAP(class) = calculate_MAP(class_label, predicted_labels);
+        [predicted_labels, ~, class_scores] = predict(labels', sparse(test_features), classifiers{class});
+        mAP(class) = calculate_mAP(labels, predicted_labels);
     end
 
 end

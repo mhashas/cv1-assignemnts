@@ -1,6 +1,7 @@
 function [map] =  calculate_mAP(actual_labels, predicted_labels)
     prec = 0;
     count = 0;
+    positive_values = sum(actual_labels==1);
     
     for i=1:length(actual_labels)
         if actual_labels(i) == 1 && predicted_labels(i) == 1
@@ -8,5 +9,5 @@ function [map] =  calculate_mAP(actual_labels, predicted_labels)
             prec = prec + ( count / i);
         end
     end
-    map = prec / sum(actual_labels==1);
+    map = prec / positive_values;
 end
