@@ -31,8 +31,8 @@ for dense = sift_types
                 tic;
                 [~, centers] = build_visual_vocab(descriptors, k, max_iter);
                 toc;
-                
-                save(sprintf('saved_vocabs/%d_images_%d_vocabsize_%s_%s.mat', vocabulary_images, k, dense_string, color), 'centers');
+                vocab_name = sprintf('saved_vocabs/%d_images_%d_vocabsize_%s_%s.mat', vocabulary_images, k, dense_string, color);
+                save(vocab_name, 'centers');
             catch e
                 warning('ERROR! Failed to build vocab %d_images_%d_vocabsize_%s_%s.mat\n%s', vocabulary_images, k, dense_string, color, e.message);
             end
