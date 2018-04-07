@@ -26,5 +26,4 @@ motorbikes_test = '../Caltech4/ImageData/motorbikes_test/';
 
 dataset_test = {airplanes_test cars_test faces_test motorbikes_test};
 
-
 end
