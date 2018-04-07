@@ -27,6 +27,7 @@ switch colorspace
         if size(image, 3) == 3
             k = [];
             d = [];
+            image = im2single(image);
             
             for c=1:size(image, 3)
                 if dense

@@ -13,7 +13,7 @@ test_images_per_class = 50;
 k = 400;
 dense_string = 'normal';
 color = "RGB";
-train_images_per_class = 50;
+train_images_per_class = 200;
 
 vocab_location = sprintf('saved_vocabs/%d_images_%d_vocabsize_%s_%s.mat', vocabulary_images, k, dense_string, color);
 load(vocab_location, 'centers');
