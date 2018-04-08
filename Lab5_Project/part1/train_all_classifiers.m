@@ -1,5 +1,5 @@
     sift_types = [0, 1]; % 0 or 1 for dense or normal sift
-    color_spaces = ["rgb"];
+    color_spaces = ["rgb", "RGB", "gray", "opponent"];
     % if set to 1, we extract keypoints from gray image and the descriptors of those keypoint from image transformed into colorspace. 
     % else we extract descriptors directly from image transformed into colorspace
     extract_from_gray = 0;
