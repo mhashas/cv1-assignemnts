@@ -1,5 +1,5 @@
-    sift_types = [0]; % 0 or 1 for dense or normal sift
-    color_spaces = ["RGB", "rgb", "opponent", "gray"];
+    sift_types = [0, 1]; % 0 or 1 for dense or normal sift
+    color_spaces = ["rgb"];
     % if set to 1, we extract keypoints from gray image and the descriptors of those keypoint from image transformed into colorspace. 
     % else we extract descriptors directly from image transformed into colorspace
     extract_from_gray = 0;
@@ -8,12 +8,6 @@
     vocabulary_images = 200; % number of images used for training the vocabulary
     max_features = 50 * vocabulary_images * 4; % max number of features 
     max_iter = 500; % max number of iterations for kmeans
-
-    k = 400;
-    dense_string = 'normal';
-    color = "RGB";
-    train_images_per_class = 200;
-
 
     for dense = sift_types
         if dense
@@ -27,10 +21,16 @@
                 vocab_location = sprintf('saved_vocabs/%d_images_%d_vocabsize_%s_%s.mat', vocabulary_images, k, dense_string, color);
                 load(vocab_location, 'centers');
                 
+                disp(sprintf('Loaded vocab %s %s %d', color, dense_string, k));
+                
                 for train_images_per_class = train_images_sizes
+                    tic
+                    disp(sprintf('Training for training size %d', train_images_per_class));
+                    
                     [classifiers, ~, ~] = train_classifier(vocabulary_images, train_images_per_class, 0, dense, color, k, max_features, 0, centers);
                     classifier_name = sprintf('trained_classifiers/%d_images_%d_vocabsize_%d_training_images_%s_%s.mat', vocabulary_images, k, train_images_per_class, dense_string, color);
                     save(classifier_name, 'classifiers'); 
+                    toc
                 end
              end
          end

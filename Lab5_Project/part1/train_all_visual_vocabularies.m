@@ -1,4 +1,4 @@
-sift_types = [1]; % 0 or 1 for dense or normal sift
+sift_types = [0,1]; % 0 or 1 for dense or normal sift
 color_spaces = ["rgb"];
 % if set to 1, we extract keypoints from gray image and the descriptors of those keypoint from image transformed into colorspace. 
 % else we extract descriptors directly from image transformed into colorspace
@@ -23,7 +23,7 @@ for dense = sift_types
         disp(sprintf('Extracting features'));
 
         tic;
-        descriptors = extract_sift_features(train_vocab_set, color, dense, max_features, extract_from_gray);
+        descriptors = extract_sift_features(train_vocab_set, color, dense, max_features);
         toc;
         for k = vocabulary_sizes
             try
