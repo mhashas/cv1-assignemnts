@@ -34,7 +34,7 @@ for dense = sift_types
                 
                 [~, ~, test_set] = load_dataset(0, 0);
                 test_features = build_features(test_set, centers, colorspace, dense, test_images_per_class);
-                mAP = evaluate(classifiers, test_set, test_features, test_images_per_class);
+                [mAP, predicted_labels, class_features]  = evaluate(classifiers, test_set, test_features, test_images_per_class);
 
                 toc
             end

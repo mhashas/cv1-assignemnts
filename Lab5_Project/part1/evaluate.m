@@ -1,7 +1,4 @@
-function [mAP] = evaluation(classifiers, test_set, test_features, test_images_per_class)
-
-
-
+function [mAP, predicted_labels, class_scores] = evaluation(classifiers, test_set, test_features, test_images_per_class)
 mAP = ones(1, 4);
     for class=1:4
         disp(sprintf('Evaluation for class %d', class));
