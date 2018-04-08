@@ -33,9 +33,15 @@ for dense = sift_types
                 load(classifier_name, 'classifiers');
                 
                 [~, ~, test_set] = load_dataset(0, 0);
-                test_features = build_features(test_set, centers, colorspace, dense, test_images_per_class);
-                [mAP, predicted_labels, class_features]  = evaluate(classifiers, test_set, test_features, test_images_per_class);
-
+                test_features = build_features(test_set, centers, color, dense, test_images_per_class);
+                [mAP, predicted_labels, scores]  = evaluate(classifiers, test_set, test_features, test_images_per_class);
+                %fill_template(test_set, scores, mAP, test_images_per_class, color, dense_string, k, train_images_per_class);
+               
+                map_name = sprintf('saved_results/MAP_%d_images_%d_vocabsize_%d_training_images_%s_%s.mat', vocabulary_images, k, train_images_per_class, dense_string, color);
+                scores_name = sprintf('saved_results/scores_%d_images_%d_vocabsize_%d_training_images_%s_%s.mat', vocabulary_images, k, train_images_per_class, dense_string, color);
+                
+                save(map_name, 'mAP');
+                save(scores_name, 'scores');
                 toc
             end
          end
