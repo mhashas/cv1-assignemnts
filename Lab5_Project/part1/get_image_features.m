@@ -17,11 +17,14 @@ switch colorspace
             image = rgb2gray(image);
         end
         
+        image = im2single(image);
+        
         if dense
             [k, d] = vl_dsift(image, 'step', 10);
         else
             [k, d] = vl_sift(image);
         end
+        d = double(d);
         
     case 'RGB'
         if size(image, 3) == 3
